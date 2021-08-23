@@ -1,6 +1,6 @@
-package com.study.configuration;
+package com.study.configures.configuration;
 
-import com.study.configuration.entity.MyEntity;
+import com.study.entity.MyEntity;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

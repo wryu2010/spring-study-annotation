@@ -102,22 +102,22 @@
 
 
 
-## @ComponentScan
+### @ComponentScan
 
 * 配置类
 
   ```java
   @Configuration
-  @ComponentScan(value = "com.study.configuration.entity",
+  @ComponentScan(value = ccom.study.configures.configurationfiguration,
           includeFilters = {@Filter(type= FilterType.ANNOTATION,value = {Component.class})})
   public class MyConfigByScan {
   
   }
   ```
 
-  > @ComponentScan需要配置includeFilters来指定扫描规则，否则不会扫描目标包下的bean。可以通过以下几种方式指定扫描规则：
+  > ***@ComponentScan需要配置includeFilters来指定扫描规则，否则不会扫描目标包下的bean。可以通过以下几种方式指定扫描规则：***
   >
-  > 1. 注解，因为@Controller、@Service、@Repository是@Component的子类，因此这里value只需要写Component.class即可
+  > 1. ***注解，因为@Controller、@Service、@Repository是@Component的子类，因此这里value只需要写Component.class即可***
   >
   >    ```java
   >    includeFilters = {@Filter(type= FilterType.ANNOTATION,
@@ -126,7 +126,7 @@
   >
   >    
   >
-  > 2. 类型
+  > 2. ***类型***
   >
   >    ```java
   >    includeFilters = {@Filter(type= FilterType.ASSIGNABLE_TYPE,
@@ -135,11 +135,11 @@
   >
   >    
   >
-  > 3. 切面
+  > 3. ***切面***
   >
-  > 4. 正则
+  > 4. ***正则***
   >
-  > 5. 自定义
+  > 5. ***自定义***
   >
   >    ```java
   >    includeFilters = {@Filter(type= FilterType.ASSIGNABLE_TYPE,
@@ -185,3 +185,92 @@
 
   
 
+### @Scope
+
+* 配置类
+
+  ```java
+  @Configuration
+  public class MyConfig {
+  
+      @Scope("prototype")
+      @Bean
+      public MyEntity myPrototypeEntity() {
+          return new MyEntity("1","原型实体");
+      }
+  
+      @Bean
+      public MyEntity mySingletonEntity() {
+          return new MyEntity("1","单例实体");
+      }
+  }
+  ```
+
+  > ***默认情况下，bean的作用域为singleton。***
+
+
+
+* 测试
+
+  ```java
+  public class MyTest {
+      @Test
+      public void testScope() {
+          ApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
+          System.out.println("作用域为prototype");
+          MyEntity myPrototypeEntity1 = (MyEntity) context.getBean("myPrototypeEntity");
+          MyEntity myPrototypeEntity2 = (MyEntity) context.getBean("myPrototypeEntity");
+          System.out.println(myPrototypeEntity1 == myPrototypeEntity2);// 打印false
+  
+          System.out.println("作用域为singleton");
+          MyEntity mySingletonEntity1 = (MyEntity) context.getBean("mySingletonEntity");
+          MyEntity mySingletonEntity2  = (MyEntity) context.getBean("mySingletonEntity");
+          System.out.println(mySingletonEntity1 == mySingletonEntity2);// 打印true
+      }
+  }
+  ```
+
+  
+
+### @Lazy
+
+* 配置类
+
+  ```java
+  @Configuration
+  public class MyConfig {
+  
+      @Lazy
+      @Bean
+      public MyEntity myeEntity() {
+          System.out.println("初始化myeEntity");
+          return new MyEntity("1","正常实体");
+      }
+  
+      @Bean
+      public MyEntity myLazyEntity() {
+          System.out.println("初始化myLazyEntity");
+          return new MyEntity("1","懒加载实体");
+      }
+  }
+  ```
+
+  > ***默认情况下，bean是非懒加载的，即在容器启动时就会创建bean。而懒加载的bean在调用getBean方法时才会创建，而且懒加载只对单例有效。***
+
+
+
+* 测试
+
+  ```java
+  public class MyTest {
+      @Test
+      public void testLazy() {
+          ApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
+          System.out.println("--------------IOC容器加载完成-----------");
+          context.getBean("myeEntity");
+          context.getBean("myLazyEntity");
+      }
+  }
+  ```
+
+  

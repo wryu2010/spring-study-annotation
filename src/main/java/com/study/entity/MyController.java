@@ -1,4 +1,4 @@
-package com.study.configuration.entity;
+package com.study.entity;
 
 import org.springframework.stereotype.Controller;
 

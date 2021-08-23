@@ -1,4 +1,4 @@
-package com.study.configuration;
+package com.study.configures.componentscan;
 
 import org.springframework.core.type.ClassMetadata;
 import org.springframework.core.type.classreading.MetadataReader;

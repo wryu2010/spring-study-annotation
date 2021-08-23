@@ -1,4 +1,4 @@
-package com.study.configuration;
+package com.study.configures.componentscan;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.FilterType;
  * @date 2021/08/22
  */
 @Configuration
-@ComponentScan(value = "com.study.configuration.entity",
+@ComponentScan(value = "com.study.entity",
 //        includeFilters = {@Filter(type= FilterType.ASSIGNABLE_TYPE,value = {MyController.class, MyService.class})}),
 //        includeFilters = {@ComponentScan.Filter(type= FilterType.ANNOTATION,value = {Component.class})},
         includeFilters = {@ComponentScan.Filter(type= FilterType.CUSTOM,value = {MyTypeFilter.class})},

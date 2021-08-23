@@ -1,4 +1,4 @@
-package com.study.configuration;
+package com.study.configures.componentscan;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
